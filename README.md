@@ -1,57 +1,58 @@
 # Minecraft-classic-RPG
-This document outlines the class structure for a text-based Minecraft RPG running in the terminal. The game will incorporate core Minecraft mechanics such as crafting, mining, trading, and combat with monsters and bosses.
+This document outlines the class structure for a text-based Minecraft RPG running in the terminal. The game will incorporate core Minecraft mechanics such as crafting, mining, trading, and combat with monsters.
 
-Object-Oriented Design
+## Object-Oriented Design
 
 Due to the repetitive nature of RPG elements, an object-oriented approach is ideal. This allows us to define classes and create multiple instances (objects) with specific properties and behaviors.
 
-Class Structure
+## Class Structure
 
-Entity
+### Entity
 
-An abstract base class.
-Attributes: health, attack, defense.
-Methods: take_damage(), is_alive().
-LivingEntity (inherits from Entity)
+* Attributes: health, attack, defense.
+* Methods: take_damage(), is_alive().
 
-Adds attributes and methods common to living entities.
-Attributes: level, experience.
-Methods: gain_experience(), level_up().
-Player (inherits from LivingEntity)
+### Player (inherits from Entity)
 
-Represents the player character.
-Attributes: inventory, equipment.
-Methods: mine(), craft(), trade(), attack().
-Villager (inherits from LivingEntity)
+* Represents the player character.
+* Attributes: inventory, equipment, level, experience.
+* Methods: mine(), craft(), trade(), attack(), sleep(), gain_experience(), level_up().
 
-Represents the various types of villagers (farmers, blacksmiths, etc.).
-Attributes: trade_inventory.
-Methods: interact(), offer_trade().
-Enemy (inherits from LivingEntity)
+### Villager (inherits from Entity)
 
-Represents hostile creatures.
-Attributes: attack_type, loot_table.
-Methods: attack_player().
-Subclasses: Zombie, Skeleton, Spider, Creeper, Enderman, etc., each with unique attributes and attack patterns.
-Boss (inherits from Enemy)
+* Represents the various types of villagers (farmers, blacksmiths, etc.).
+* Attributes: trade_inventory, trade_level.
+* Methods: offer_trade().
 
-Represents challenging boss enemies.
-Attributes: special_abilities.
-Methods: use_special_ability().
-Examples: EnderDragon, Wither.
-Item
+### Enemy (inherits from Entity)
 
-Represents in-game items.
-Attributes: name, description, value, type (weapon, tool, material, etc.).
-Inventory
+* Represents hostile creatures.
+* Attributes: loot_table.
+* Methods: attack_player().
+* Examples: Zombie, Skeleton, Spider, Creeper, Enderman, etc., each with unique attributes and attack values.
 
-Manages a collection of items.
-Methods: add_item(), remove_item(), get_item_count().
-CraftingRecipe
+### Item
 
-Defines the requirements and results of crafting.
-Attributes: ingredients, result.
-Event
+* Represents in-game items.
+* Attributes: name, type (weapon, tool, material, etc.).
 
-An abstract base class for handling various in-game events.
-Subclasses: CombatEvent, MiningEvent, TradingEvent, SleepEvent, DayNightCycle.
+### Tools (inherits from Item)
+
+* Represents in-game tools.
+* Attributes: atack_augmntation, haste_stone_augmentation, haste_sand_augmentation, haste_wood_augmentation.
+
+### Inventory
+
+* Manages a collection of items the player owns.
+* Methods: add_item(), remove_item(), get_item_count().
+
+### CraftingRecipe
+
+* Defines the requirements and results of crafting.
+* Attributes: ingredients, resulting_item.
+
+### Location
+
+* A base class for handling various in-game location.
+
+* Subclasses: Mine, Village, PlayerBase.
