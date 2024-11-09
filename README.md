@@ -1,58 +1,51 @@
 # Minecraft-classic-RPG
-This document outlines the class structure for a text-based Minecraft RPG running in the terminal. The game will incorporate core Minecraft mechanics such as crafting, mining, trading, and combat with monsters.
+This document outlines the class structure for a text-based Minecraft RPG running in the terminal.
 
 ## Object-Oriented Design
 
 Due to the repetitive nature of RPG elements, an object-oriented approach is ideal. This allows us to define classes and create multiple instances (objects) with specific properties and behaviors.
 
-## Class Structure
-
 ### Entity
 
-* Attributes: health, attack, defense.
-* Methods: take_damage(), is_alive().
+* Represents a living entity in the game, with attributes like health, damage, resistance, and inventory, and methods for taking damage and attacking.
 
-### Player (inherits from Entity)
+### Player
 
-* Represents the player character.
-* Attributes: inventory, equipment, level, experience.
-* Methods: mine(), craft(), trade(), attack(), sleep(), gain_experience(), level_up().
+* Inherits from Entity, representing the player character, with additional attributes like experience level and name, and methods for leveling up and increasing stats.
 
-### Villager (inherits from Entity)
+### Enemy
 
-* Represents the various types of villagers (farmers, blacksmiths, etc.).
-* Attributes: trade_inventory, trade_level.
-* Methods: offer_trade().
-
-### Enemy (inherits from Entity)
-
-* Represents hostile creatures.
-* Attributes: loot_table.
-* Methods: attack_player().
-* Examples: Zombie, Skeleton, Spider, Creeper, Enderman, etc., each with unique attributes and attack values.
-
-### Item
-
-* Represents in-game items.
-* Attributes: name, type (weapon, tool, material, etc.).
-
-### Tools (inherits from Item)
-
-* Represents in-game tools.
-* Attributes: atack_augmntation, haste_stone_augmentation, haste_sand_augmentation, haste_wood_augmentation.
+* Inherits from Entity, representing an enemy in the game, with methods for attacking the player.
 
 ### Inventory
 
-* Manages a collection of items the player owns.
-* Methods: add_item(), remove_item(), get_item_count().
+* Represents the player's inventory, including equipped weapons and armor, items, and methods for adding, removing, and equipping items.
 
-### CraftingRecipe
+### Dungeon
 
-* Defines the requirements and results of crafting.
-* Attributes: ingredients, resulting_item.
+* Represents a dungeon level, with attributes like level, enemies, boss, items, and exit, and methods for generating content and handling player progress.
 
-### Location
+### Item
 
-* A base class for handling various in-game location.
+* Represents an item in the game, with attributes like type, stats, and methods for getting stats.
 
-* Subclasses: Mine, Village, PlayerBase.
+### Weapon
+
+* Inherits from Item, representing a weapon, with attributes like damage and critical chance.
+
+### Armor
+
+* Inherits from Item, representing armor, with an attribute for resistance.
+
+### Game
+
+* Represents the main game, with attributes like the player, dungeon, combat, and UI, and methods for starting the game, running the game loop, and ending the game.
+
+### Combat
+
+* Handles the combat mechanics of the game, with methods for handling turns, calculating damage, applying status effects, checking for death, and handling input.
+
+#UML Class Diagram
+
+
+![UML Class diagram](https://github.com/user-attachments/assets/e61f6dcc-53fd-4318-8832-d4de7bca9e00)
