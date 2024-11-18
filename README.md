@@ -1,51 +1,111 @@
-# Minecraft-classic-RPG
-This document outlines the class structure for a text-based Minecraft RPG running in the terminal.
+# Turn-Based RPG Game in C++
+This project is a simple turn-based RPG game implemented in C++. The game is played in the terminal and involves a player navigating through a dungeon with multiple levels, fighting enemies on each level, and ultimately facing a boss on the final level. The player gains experience and levels up by defeating enemies, increasing their stats to prepare for tougher challenges ahead.
 
-## Object-Oriented Design
+## Game Mechanics
+Dungeon Levels:
 
-Due to the repetitive nature of RPG elements, an object-oriented approach is ideal. This allows us to define classes and create multiple instances (objects) with specific properties and behaviors.
+The game consists of 10 dungeon levels. Each level contains a set of enemies that the player must defeat to progress.
+
+Combat:
+
+Combat is turn-based. The player and enemies take turns attacking each other until one is defeated.
+
+Experience and Leveling Up:
+
+The player gains experience points (XP) by defeating enemies. Upon accumulating enough XP, the player levels up, increasing their stats such as health and damage.
+
+Boss Battle:
+
+On the 10th level, the player faces a boss. Defeating the boss completes the game.
+
+Game Over:
+
+If the player's health drops to zero, the game ends.
+
+# Class Structure
+The game's functionality is organized using several classes, each responsible for different aspects of the game.
 
 ### Entity
+Purpose: Serves as the base class for all characters in the game, including the player and enemies.
 
-* Represents a living entity in the game, with attributes like health, damage, resistance, and inventory, and methods for taking damage and attacking.
+Key Features:
+
+Attributes:
+
+Health
+
+Damage
+
+Critical Hit Chance
+
+Resistance
+
+Methods: Common functions shared by all entities, such as taking damage or checking if alive.
 
 ### Player
+Purpose: Represents the player's character in the game.
 
-* Inherits from Entity, representing the player character, with additional attributes like experience level and name, and methods for leveling up and increasing stats.
+Inherits From: Entity
+
+Key Features:
+
+Attributes:
+
+Name
+
+Experience Points
+
+Level
+
+Methods:
+
+Leveling up
+
+Gaining experience
 
 ### Enemy
+Purpose: Represents enemy characters encountered in the dungeon.
 
-* Inherits from Entity, representing an enemy in the game, with methods for attacking the player.
+Inherits From: Entity
 
-### Inventory
+Key Features:
 
-* Represents the player's inventory, including equipped weapons and armor, items, and methods for adding, removing, and equipping items.
+Methods:
+
+Attacking the player
 
 ### Dungeon
 
-* Represents a dungeon level, with attributes like level, enemies, boss, items, and exit, and methods for generating content and handling player progress.
+Purpose: Manages the dungeon levels and controls the progression through the game.
 
-### Item
+Key Features:
 
-* Represents an item in the game, with attributes like type, stats, and methods for getting stats.
+Attributes:
 
-### Weapon
+Current Level
 
-* Inherits from Item, representing a weapon, with attributes like damage and critical chance.
+List of Enemies
 
-### Armor
+Methods:
 
-* Inherits from Item, representing armor, with an attribute for resistance.
+Generating levels
 
-### Game
-
-* Represents the main game, with attributes like the player, dungeon, combat, and UI, and methods for starting the game, running the game loop, and ending the game.
+Advancing to the next level
 
 ### Combat
+Purpose: Handles the combat interactions between the player and enemies.
 
-* Handles the combat mechanics of the game, with methods for handling turns, calculating damage, applying status effects, checking for death, and handling input.
+Key Features:
 
-#UML Class Diagram
+Methods:
 
+Initiating combat
 
-![UML Class diagram](https://github.com/user-attachments/assets/e61f6dcc-53fd-4318-8832-d4de7bca9e00)
+Managing turns
+
+Calculating damage
+
+# UML Class Diagram
+
+![UML 2](https://github.com/user-attachments/assets/d88f2a32-46d5-4f67-91b9-76dc68f7d570)
+
