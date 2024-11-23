@@ -4,6 +4,7 @@
 class Entity {
 protected:
     int health;
+    int maxHealth;
     bool isAlive;
     int damage;
     float criticalDamagePercent;
@@ -17,8 +18,10 @@ public:
     int getHealth() const;
     void setHealth(int health);
 
+    int getMaxHealth() const;
+    void setMaxHealth(int maxHealth);
+
     bool getIsAlive() const;
-    void setIsAlive(bool isAlive);
 
     int getDamage() const;
     void setDamage(int damage);
