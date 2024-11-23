@@ -2,15 +2,30 @@
 #define DUNGEON_H
 
 #include "Enemy.h"
-#include "Exit.h"
 #include <vector>
+#include <unordered_map>
+#include <string>
 
 class Dungeon {
 private:
     int level;
-    std::vector<Enemy> enemies;
-    Enemy boss;
-    Exit exit;
+    std::vector<Enemy> enemies;  // Storing enemies by value (no pointers)
+
+    struct EnemyData {
+        int baseHealth;
+        int baseDamage;
+        int baseResistance;
+        float baseCritChance;
+        float baseCritMultiplier;
+        int baseExperience;
+        int rarity;
+    };
+
+    std::unordered_map<std::string, EnemyData> enemyDictionary;
+
+    void initializeEnemyDictionary();
+    Enemy createEnemy(const std::string& name);
+    std::string selectEnemyByRarity();
 
 public:
     Dungeon();
@@ -22,13 +37,6 @@ public:
     std::vector<Enemy>& getEnemies();
     void setEnemies(const std::vector<Enemy>& enemies);
 
-    Enemy& getBoss();
-    void setBoss(const Enemy& boss);
-
-    Exit& getExit();
-    void setExit(const Exit& exit);
-
-    // Methods
     void progressToNextLevel();
     void generateLevel();
 };
