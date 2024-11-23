@@ -1,8 +1,8 @@
 #include "Entity.h"
 
 Entity::Entity()
-    : health(100), isAlive(true), damage(10), criticalDamagePercent(0.1f),
-      criticalDamageMultiplier(1.5f), resistance(0) {}
+    : health(100), maxHealth(100), isAlive(true), damage(10),
+      criticalDamagePercent(0.1f), criticalDamageMultiplier(1.5f), resistance(0) {}
 
 int Entity::getHealth() const {
     return health;
@@ -13,15 +13,24 @@ void Entity::setHealth(int health) {
     if (health <= 0) {
         this->health = 0;
         isAlive = false;
+    } else if (health > maxHealth) {
+        this->health = maxHealth; // Cap health at maxHealth
+    }
+}
+
+int Entity::getMaxHealth() const {
+    return maxHealth;
+}
+
+void Entity::setMaxHealth(int maxHealth) {
+    this->maxHealth = maxHealth;
+    if (health > maxHealth) {
+        health = maxHealth; // Adjust current health if maxHealth decreases
     }
 }
 
 bool Entity::getIsAlive() const {
     return isAlive;
-}
-
-void Entity::setIsAlive(bool isAlive) {
-    this->isAlive = isAlive;
 }
 
 int Entity::getDamage() const {
