@@ -1,31 +1,17 @@
 #include "Combat.h"
-#include <iostream>
 
-Combat::Combat(Player& player, Enemy& enemy)
-    : player(player), enemy(enemy) {}
+Combat::Combat(Player& player, Enemy& enemy, Dungeon& dungeon)
+    : player(player), enemy(enemy), dungeon(dungeon) {}
 
-void Combat::startCombat() {
-    while (player.getIsAlive() && enemy.getIsAlive()) {
-        playerTurn();
-        if (enemy.getIsAlive()) {
-            enemyTurn();
-        }
-    }
-    checkForDeaths();
+std::string Combat::playerTurn() {
+    return calculateDamage(player.getName(), player, enemy.getName(), enemy);
 }
 
-void Combat::playerTurn() {
-    // For simplicity, player always attacks
-    calculateDamage(player, enemy);
-    applyStatusEffects(enemy);
+std::string Combat::enemyTurn() {
+    return calculateDamage(enemy.getName(), enemy, player.getName(), player);
 }
 
-void Combat::enemyTurn() {
-    enemy.attackPlayer(player);
-    applyStatusEffects(player);
-}
-
-void Combat::calculateDamage(Entity& attacker, Entity& defender) {
+std::string Combat::calculateDamage(const std::string& attackerName, Entity& attacker, const std::string& defenderName, Entity& defender) {
     int actualDamage = attacker.getDamage();
 
     // Check for critical hit
@@ -42,21 +28,19 @@ void Combat::calculateDamage(Entity& attacker, Entity& defender) {
     int newHealth = defender.getHealth() - damageDealt;
     defender.setHealth(newHealth);
 
-    // Output attack information
-    std::cout << "Attacker dealt " << damageDealt << " damage.\n";
+    // Return attack information as a string
+    return attackerName + " dealt " + std::to_string(damageDealt) + " damage to " + defenderName + "!";
 }
 
-void Combat::applyStatusEffects(Entity& entity) {
-    // Implement status effects if any
-}
-
-void Combat::checkForDeaths() {
+std::string Combat::checkForDeaths() {
     if (!player.getIsAlive()) {
-        std::cout << "Player has been defeated!\n";
+        return "Player has been defeated!";
     }
     if (!enemy.getIsAlive()) {
-        std::cout << "Enemy has been defeated!\n";
-        // Grant experience to player
-        player.gainExperience(10); // Example experience gain
+        int expGained = 5 + (dungeon.getLevel() * 2);
+        player.gainExperience(expGained);
+        return "Enemy " + enemy.getName() + " has been defeated! You gained " + std::to_string(expGained) + " experience points!";
     }
+    return "";
 }
+
