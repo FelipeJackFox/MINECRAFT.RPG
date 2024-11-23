@@ -3,24 +3,25 @@
 
 #include "Player.h"
 #include "Enemy.h"
+#include "Dungeon.h"
+#include "Entity.h"
+#include <vector>
+#include <string>
 
 class Combat {
 private:
     Player& player;
     Enemy& enemy;
-
-    // Private Methods
-    void playerTurn();
-    void enemyTurn();
-    void calculateDamage(Entity& attacker, Entity& defender);
-    void applyStatusEffects(Entity& entity);
-    void checkForDeaths();
+    Dungeon& dungeon;
+    
+    std::string calculateDamage(const std::string& attackerName, Entity& attacker, const std::string& defenderName, Entity& defender);
 
 public:
-    Combat(Player& player, Enemy& enemy);
+    Combat(Player& player, Enemy& enemy, Dungeon& dungeon);
 
-    // Methods
-    void startCombat();
+    std::string playerTurn();
+    std::string enemyTurn();
+    std::string checkForDeaths();
 };
 
 #endif // COMBAT_H
