@@ -1,28 +1,106 @@
 #include "Enemy.h"
-#include <cstdlib>
 
-Enemy::Enemy() {
-    // Customize enemy stats if needed
-    health = 50;
-    damage = 8;
-    criticalDamagePercent = 0.05f;
-    criticalDamageMultiplier = 1.2f;
+Enemy::Enemy() : Entity(), experiencePoints(0) {
+    setMaxHealth(100); // Default max health for enemies
+    setHealth(100);    // Initialize current health
 }
 
-void Enemy::attackPlayer(Player& player) {
-    int actualDamage = damage;
+void Enemy::setName(const std::string& name) {
+    this->name = name;
+}
 
-    // Check for critical hit
-    float randValue = static_cast<float>(rand()) / RAND_MAX;
-    if (randValue < criticalDamagePercent) {
-        actualDamage = static_cast<int>(damage * criticalDamageMultiplier);
+std::string Enemy::getName() const {
+    return name;
+}
+
+void Enemy::setExperiencePoints(int exp) {
+    experiencePoints = exp;
+}
+
+int Enemy::getExperiencePoints() const {
+    return experiencePoints;
+}
+
+//Method to return plain ASCII art based on the enemy name
+std::string Enemy::getAsciiArt() const {
+    if (name == "Creeper") {
+        return R"(
+
+    %%%((##########%%%//
+    %%%((###########%%//
+    (((.....##(((..   &&
+    ///     ((***     %%
+    (((,,***,,...*****##
+    ###//***     //(((##
+    %%%//          (((##
+    %%%((   ..,,,  %%%//
+
+    )";
+    } else if (name == "Skeleton") {
+        return R"(
+
+    ########(((((((#####
+    ##########%%%%%###((
+    ###%%&&&&&&&&&&%%%##
+    %%%%%%%%%%###%%#####
+    %%%,,,,,%%%%%,,,,,%%
+    ###%%&&&/////&&###((
+    ###,,,,,,,,,,,,,,,((
+    ((((((((((((((((((((
+
+    )";
+    } else if (name == "Zombie") {
+        return R"(
+
+    /****///************
+    **********/////*****
+    ***((((((((((((/////
+    /////////////((***//
+    (//     //(((     //
+    /**(((((,,,,,((///**
+    *************,,*****
+    ,,,,,,,,,,***,,***,,
+
+    )";
+    } else if (name == "Spider") {
+        return R"(
+
+    .....***,,,,,**   ..
+    ***,,.  *****  ,,,**
+    ...**,,,*****,,***,,
+    .  ,,,,,  ,,,..,,,..
+    ,,,**...  ...  ***..
+    ,,,,,,*****,,**,,,,,
+    ,,,((.  ,,,,,  (((,,
+    ...((   ,,,,,  (((..
+
+    )";
+    } else if (name == "Enderman") {
+        return R"(
+
+       ..          ...  
+
+    .                   
+
+    %##**%##     ##***##
+
+
+    .                   
+
+    )";
+    } else if (name == "Witch") {
+        return R"(
+
+    ***************  
+    **//**//////*//  
+    **//**//////*//  
+    **//////////*//  
+    //&&&&&&&&&&&//  
+    **  ((////(# **  
+    ((////((((///((  
+    ((////(##(///((  
+
+    )";
     }
-
-    // Calculate damage after resistance
-    int damageDealt = actualDamage - player.getResistance();
-    if (damageDealt < 0) damageDealt = 0;
-
-    // Apply damage to player
-    int newHealth = player.getHealth() - damageDealt;
-    player.setHealth(newHealth);
+    return "";
 }
